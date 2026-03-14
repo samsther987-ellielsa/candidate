@@ -1,6 +1,14 @@
 "use client";
 
 import { useState } from "react";
+import {
+  MapPinIcon,
+  PhoneIcon,
+  EnvelopeIcon,
+  ClockIcon,
+  CheckCircleIcon,
+} from "@heroicons/react/24/outline";
+import type { ComponentType, SVGProps } from "react";
 
 export default function ContactPage() {
   const [consent, setConsent] = useState(false);
@@ -28,14 +36,16 @@ export default function ContactPage() {
               선거사무소 안내
             </h2>
             <ul className="space-y-6">
-              {[
-                { icon: "📍", label: "주소", value: "충청남도 서산시 (상세 주소 추후 공개)" },
-                { icon: "📞", label: "전화", value: "041-000-0000" },
-                { icon: "📧", label: "이메일", value: "contact@candidate.kr" },
-                { icon: "🕐", label: "운영 시간", value: "평일 09:00 ~ 18:00" },
-              ].map((item) => (
+              {(
+                [
+                  { Icon: MapPinIcon,  label: "주소",    value: "충청남도 서산시 (상세 주소 추후 공개)" },
+                  { Icon: PhoneIcon,   label: "전화",    value: "041-000-0000" },
+                  { Icon: EnvelopeIcon,label: "이메일",  value: "contact@candidate.kr" },
+                  { Icon: ClockIcon,   label: "운영 시간", value: "평일 09:00 ~ 18:00" },
+                ] as { Icon: ComponentType<SVGProps<SVGSVGElement>>; label: string; value: string }[]
+              ).map((item) => (
                 <li key={item.label} className="flex gap-4 items-start">
-                  <span className="text-2xl flex-shrink-0">{item.icon}</span>
+                  <item.Icon className="w-6 h-6 flex-shrink-0 mt-0.5" style={{ color: "var(--color-primary)" }} />
                   <div>
                     <p className="text-xs font-semibold uppercase tracking-wide mb-1" style={{ color: "var(--color-text-muted)" }}>
                       {item.label}
@@ -70,7 +80,7 @@ export default function ContactPage() {
             </h2>
             {submitted ? (
               <div className="text-center py-10">
-                <div className="text-4xl mb-4">✅</div>
+                <CheckCircleIcon className="w-12 h-12 mb-4 mx-auto" style={{ color: "var(--color-primary)" }} />
                 <p className="text-lg font-semibold" style={{ color: "var(--color-primary)" }}>
                   문의가 접수되었습니다!
                 </p>

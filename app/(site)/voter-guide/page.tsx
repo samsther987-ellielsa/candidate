@@ -1,4 +1,10 @@
 import type { Metadata } from "next";
+import {
+  CalendarIcon,
+  ClipboardDocumentCheckIcon,
+  MapPinIcon,
+  ExclamationTriangleIcon,
+} from "@heroicons/react/24/outline";
 
 export const metadata: Metadata = {
   title: "유권자 안내 | 홍길동",
@@ -23,8 +29,9 @@ export default function VoterGuidePage() {
       <section className="mx-auto max-w-4xl px-4 py-16 space-y-12">
         {/* 투표 일정 */}
         <div>
-          <h2 className="text-2xl font-bold mb-6" style={{ fontFamily: "Noto Serif KR, serif", color: "var(--color-primary)" }}>
-            📅 투표 일정
+          <h2 className="text-2xl font-bold mb-6 flex items-center gap-3" style={{ fontFamily: "Noto Serif KR, serif", color: "var(--color-primary)" }}>
+            <CalendarIcon className="w-7 h-7 flex-shrink-0" />
+            투표 일정
           </h2>
           <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
             <div
@@ -65,8 +72,9 @@ export default function VoterGuidePage() {
 
         {/* 투표 방법 */}
         <div>
-          <h2 className="text-2xl font-bold mb-6" style={{ fontFamily: "Noto Serif KR, serif", color: "var(--color-primary)" }}>
-            🗳️ 투표 방법
+          <h2 className="text-2xl font-bold mb-6 flex items-center gap-3" style={{ fontFamily: "Noto Serif KR, serif", color: "var(--color-primary)" }}>
+            <ClipboardDocumentCheckIcon className="w-7 h-7 flex-shrink-0" />
+            투표 방법
           </h2>
           <ol className="space-y-4">
             {[
@@ -100,7 +108,7 @@ export default function VoterGuidePage() {
           className="rounded-2xl border p-8 text-center"
           style={{ backgroundColor: "var(--color-bg-subtle)", borderColor: "var(--color-border)" }}
         >
-          <div className="text-4xl mb-4">📍</div>
+          <MapPinIcon className="w-12 h-12 mb-4 mx-auto" style={{ color: "var(--color-primary)" }} />
           <h2 className="text-2xl font-bold mb-3" style={{ fontFamily: "Noto Serif KR, serif", color: "var(--color-primary)" }}>
             투표소 찾기
           </h2>
@@ -123,8 +131,9 @@ export default function VoterGuidePage() {
           className="rounded-2xl border p-6"
           style={{ borderColor: "var(--color-border)", backgroundColor: "#fffbeb" }}
         >
-          <h3 className="text-base font-bold mb-3" style={{ color: "#92400e" }}>
-            ⚠️ 투표 시 유의사항
+          <h3 className="text-base font-bold mb-3 flex items-center gap-2" style={{ color: "#92400e" }}>
+            <ExclamationTriangleIcon className="w-5 h-5 flex-shrink-0" />
+            투표 시 유의사항
           </h3>
           <ul className="space-y-2 text-sm" style={{ color: "#78350f" }}>
             <li>• 투표소 안에서 사진 촬영, 통화는 금지입니다.</li>

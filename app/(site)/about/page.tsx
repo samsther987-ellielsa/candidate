@@ -1,6 +1,13 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import Image from "next/image";
+import {
+  HomeModernIcon,
+  BookOpenIcon,
+  BriefcaseIcon,
+  GlobeAmericasIcon,
+} from "@heroicons/react/24/outline";
+import type { ComponentType, SVGProps } from "react";
 
 export const metadata: Metadata = {
   title: "후보자 소개 | 홍길동",
@@ -15,11 +22,13 @@ const CAREER = [
   { year: "2026", title: "서산시 선거 출마", desc: "서산 시민과 함께 더 나은 내일을 만들기 위해" },
 ];
 
-const KEY_POLICIES = [
-  { icon: "🏘️", title: "주거 안정", desc: "공공임대주택 500세대 공급, 청년 임대료 월 20만원 지원" },
-  { icon: "📚", title: "교육 혁신", desc: "공립 돌봄센터 5개소 신설, 방과후 프로그램 무상 확대" },
-  { icon: "💼", title: "일자리 창출", desc: "청년 창업 센터 설립, 지역 기업 채용 인센티브 강화" },
-  { icon: "🌿", title: "환경 보호", desc: "서산 갯벌 생태 보전 특별구역 지정, 녹지 20% 확대" },
+type IconComponent = ComponentType<SVGProps<SVGSVGElement>>;
+
+const KEY_POLICIES: { icon: IconComponent; title: string; desc: string }[] = [
+  { icon: HomeModernIcon,    title: "주거 안정", desc: "공공임대주택 500세대 공급, 청년 임대료 월 20만원 지원" },
+  { icon: BookOpenIcon,      title: "교육 혁신", desc: "공립 돌봄센터 5개소 신설, 방과후 프로그램 무상 확대" },
+  { icon: BriefcaseIcon,     title: "일자리 창출", desc: "청년 창업 센터 설립, 지역 기업 채용 인센티브 강화" },
+  { icon: GlobeAmericasIcon, title: "환경 보호", desc: "서산 갯벌 생태 보전 특별구역 지정, 녹지 20% 확대" },
 ];
 
 export default function AboutPage() {
@@ -153,17 +162,19 @@ export default function AboutPage() {
           </h2>
         </div>
         <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
-          {KEY_POLICIES.map((p) => (
+          {KEY_POLICIES.map((p) => {
+            const Icon = p.icon;
+            return (
             <div
               key={p.title}
               className="group rounded-2xl border bg-white p-6 transition-all duration-200 hover:shadow-lg hover:-translate-y-1"
               style={{ borderColor: "var(--color-border)" }}
             >
               <div
-                className="w-12 h-12 rounded-xl flex items-center justify-center text-2xl mb-4"
+                className="w-12 h-12 rounded-xl flex items-center justify-center mb-4"
                 style={{ backgroundColor: "var(--color-bg-subtle)" }}
               >
-                {p.icon}
+                <Icon className="w-6 h-6" style={{ color: "var(--color-primary)" }} />
               </div>
               <h3 className="text-base font-bold mb-2" style={{ color: "var(--color-primary)" }}>
                 {p.title}
@@ -172,7 +183,8 @@ export default function AboutPage() {
                 {p.desc}
               </p>
             </div>
-          ))}
+            );
+          })}
         </div>
         <div className="text-center mt-8">
           <Link

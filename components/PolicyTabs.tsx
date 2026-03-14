@@ -1,11 +1,29 @@
 "use client";
 
 import { useState } from "react";
+import {
+  HomeModernIcon,
+  BookOpenIcon,
+  BriefcaseIcon,
+  GlobeAmericasIcon,
+  HeartIcon,
+  TruckIcon,
+} from "@heroicons/react/24/outline";
+import type { ComponentType, SVGProps } from "react";
 
-const CATEGORIES = [
+type IconComponent = ComponentType<SVGProps<SVGSVGElement>>;
+
+const CATEGORIES: {
+  id: string;
+  icon: IconComponent;
+  label: string;
+  color: string;
+  headline: string;
+  items: { num: string; title: string; detail: string }[];
+}[] = [
   {
     id: "housing",
-    icon: "🏘️",
+    icon: HomeModernIcon,
     label: "주거 안정",
     color: "#1e3a5f",
     headline: "모든 서산 시민이 안심하고 살 수 있는 집",
@@ -17,7 +35,7 @@ const CATEGORIES = [
   },
   {
     id: "education",
-    icon: "📚",
+    icon: BookOpenIcon,
     label: "교육 혁신",
     color: "#065f46",
     headline: "아이 키우기 좋은 도시, 서산",
@@ -29,7 +47,7 @@ const CATEGORIES = [
   },
   {
     id: "jobs",
-    icon: "💼",
+    icon: BriefcaseIcon,
     label: "일자리 창출",
     color: "#7c2d12",
     headline: "청년이 돌아오는 서산, 일자리가 있는 서산",
@@ -41,7 +59,7 @@ const CATEGORIES = [
   },
   {
     id: "environment",
-    icon: "🌿",
+    icon: GlobeAmericasIcon,
     label: "환경 보호",
     color: "#064e3b",
     headline: "서산의 자연은 우리의 자산입니다",
@@ -53,7 +71,7 @@ const CATEGORIES = [
   },
   {
     id: "welfare",
-    icon: "🏥",
+    icon: HeartIcon,
     label: "복지 강화",
     color: "#4c1d95",
     headline: "한 사람도 소외되지 않는 서산",
@@ -65,7 +83,7 @@ const CATEGORIES = [
   },
   {
     id: "transport",
-    icon: "🚌",
+    icon: TruckIcon,
     label: "교통 개선",
     color: "#1e3a5f",
     headline: "어디서나 연결되는 서산",
@@ -80,26 +98,30 @@ const CATEGORIES = [
 export default function PolicyTabs() {
   const [active, setActive] = useState(0);
   const cat = CATEGORIES[active];
+  const CatIcon = cat.icon;
 
   return (
     <div>
       {/* 탭 버튼 */}
       <div className="flex flex-wrap gap-2 mb-10 justify-center">
-        {CATEGORIES.map((c, i) => (
-          <button
-            key={c.id}
-            onClick={() => setActive(i)}
-            className="flex items-center gap-2 px-4 py-2.5 rounded-full text-sm font-semibold transition-all duration-200 min-h-[44px]"
-            style={
-              active === i
-                ? { backgroundColor: c.color, color: "#fff", transform: "scale(1.05)" }
-                : { backgroundColor: "var(--color-bg-subtle)", color: "var(--color-text-muted)", border: "1px solid var(--color-border)" }
-            }
-          >
-            <span>{c.icon}</span>
-            <span>{c.label}</span>
-          </button>
-        ))}
+        {CATEGORIES.map((c, i) => {
+          const Icon = c.icon;
+          return (
+            <button
+              key={c.id}
+              onClick={() => setActive(i)}
+              className="flex items-center gap-2 px-4 py-2.5 rounded-full text-sm font-semibold transition-all duration-200 min-h-[44px]"
+              style={
+                active === i
+                  ? { backgroundColor: c.color, color: "#fff", transform: "scale(1.05)" }
+                  : { backgroundColor: "var(--color-bg-subtle)", color: "var(--color-text-muted)", border: "1px solid var(--color-border)" }
+              }
+            >
+              <Icon className="w-4 h-4 flex-shrink-0" />
+              <span>{c.label}</span>
+            </button>
+          );
+        })}
       </div>
 
       {/* 콘텐츠 영역 */}
@@ -114,7 +136,7 @@ export default function PolicyTabs() {
           style={{ backgroundColor: cat.color }}
         >
           <div className="flex items-center gap-4 mb-3">
-            <span className="text-4xl">{cat.icon}</span>
+            <CatIcon className="w-10 h-10 flex-shrink-0" />
             <div>
               <p className="text-sm font-semibold uppercase tracking-widest opacity-75">{cat.label}</p>
               <h2 className="text-xl font-bold md:text-2xl" style={{ fontFamily: "Noto Serif KR, serif" }}>

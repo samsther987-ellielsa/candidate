@@ -1,6 +1,13 @@
 "use client";
 
 import { useState } from "react";
+import {
+  HandRaisedIcon,
+  EnvelopeIcon,
+  CheckCircleIcon,
+  InboxArrowDownIcon,
+  BanknotesIcon,
+} from "@heroicons/react/24/outline";
 
 const SAMPLE_CHEERS = [
   { name: "서산 시민 이○○", message: "서산이 더 살기 좋아질 거라 믿습니다. 꼭 잘 해주세요!", region: "서산시 동문동" },
@@ -83,7 +90,7 @@ export default function ParticipatePage() {
           >
             {cheerSubmitted ? (
               <div className="text-center py-10">
-                <div className="text-5xl mb-4">❤️</div>
+                <CheckCircleIcon className="w-12 h-12 mb-4 mx-auto" style={{ color: "var(--color-cta)" }} />
                 <p className="text-xl font-bold mb-2" style={{ color: "var(--color-primary)" }}>
                   응원 메시지가 전달되었습니다!
                 </p>
@@ -172,7 +179,7 @@ export default function ParticipatePage() {
           {/* 자원봉사 */}
           <div className="rounded-3xl border bg-white p-8" style={{ borderColor: "var(--color-border)" }}>
             <div className="flex items-center gap-3 mb-6">
-              <div className="text-3xl">🙋</div>
+              <HandRaisedIcon className="w-8 h-8 flex-shrink-0" style={{ color: "var(--color-primary)" }} />
               <div>
                 <h2 className="text-xl font-bold" style={{ fontFamily: "Noto Serif KR, serif", color: "var(--color-primary)" }}>
                   자원봉사 신청
@@ -182,7 +189,7 @@ export default function ParticipatePage() {
             </div>
             {volunteerSubmitted ? (
               <div className="text-center py-8">
-                <div className="text-4xl mb-3">✅</div>
+                <CheckCircleIcon className="w-10 h-10 mb-3 mx-auto" style={{ color: "var(--color-primary)" }} />
                 <p className="font-semibold" style={{ color: "var(--color-primary)" }}>신청 완료! 곧 연락드리겠습니다.</p>
               </div>
             ) : (
@@ -222,7 +229,7 @@ export default function ParticipatePage() {
           {/* 뉴스레터 */}
           <div className="rounded-3xl border bg-white p-8" style={{ borderColor: "var(--color-border)" }}>
             <div className="flex items-center gap-3 mb-6">
-              <div className="text-3xl">📧</div>
+              <EnvelopeIcon className="w-8 h-8 flex-shrink-0" style={{ color: "var(--color-cta)" }} />
               <div>
                 <h2 className="text-xl font-bold" style={{ fontFamily: "Noto Serif KR, serif", color: "var(--color-primary)" }}>
                   뉴스레터 구독
@@ -232,7 +239,7 @@ export default function ParticipatePage() {
             </div>
             {newsletterSubmitted ? (
               <div className="text-center py-8">
-                <div className="text-4xl mb-3">📬</div>
+                <InboxArrowDownIcon className="w-10 h-10 mb-3 mx-auto" style={{ color: "var(--color-primary)" }} />
                 <p className="font-semibold" style={{ color: "var(--color-primary)" }}>구독 완료! 소식 보내드리겠습니다.</p>
               </div>
             ) : (
@@ -272,7 +279,10 @@ export default function ParticipatePage() {
 
             {/* 후원 안내 */}
             <div className="mt-6 rounded-2xl p-4 border" style={{ backgroundColor: "var(--color-bg-subtle)", borderColor: "var(--color-border)" }}>
-              <p className="text-sm font-semibold mb-1" style={{ color: "var(--color-primary)" }}>💰 후원 안내</p>
+              <p className="text-sm font-semibold mb-1 flex items-center gap-1.5" style={{ color: "var(--color-primary)" }}>
+                <BanknotesIcon className="w-4 h-4 flex-shrink-0" />
+                후원 안내
+              </p>
               <p className="text-xs leading-5" style={{ color: "var(--color-text-muted)" }}>
                 후원은 선관위 지정 계좌를 통해 진행됩니다. 문의: 041-000-0000
               </p>
