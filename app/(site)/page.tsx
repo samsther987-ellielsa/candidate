@@ -23,11 +23,18 @@ const STATS = [
   { value: "47개", label: "구체적 공약" },
 ];
 
-const POLICIES: { icon: IconComponent; title: string; desc: string }[] = [
-  { icon: HomeModernIcon, title: "주거 안정", desc: "공공임대 500세대 공급\n청년 임대료 월 20만원 지원" },
-  { icon: BookOpenIcon,   title: "교육 혁신", desc: "돌봄센터 5개소 신설\n방과후 프로그램 무상 확대" },
-  { icon: BriefcaseIcon,  title: "일자리 창출", desc: "청년 창업 센터 설립\n지역 기업 채용 인센티브" },
-  { icon: GlobeAmericasIcon, title: "환경 보호", desc: "갯벌 생태 보전 특별구역\n도심 녹지 20% 확대" },
+const POLICY_COLORS: Record<string, string> = {
+  주거: "#1e3a5f",
+  교육: "#0369a1",
+  경제: "#92400e",
+  환경: "#065f46",
+};
+
+const POLICIES: { icon: IconComponent; category: string; title: string; desc: string }[] = [
+  { icon: HomeModernIcon,    category: "주거", title: "주거 안정",   desc: "공공임대 500세대 공급, 청년 임대료 월 20만원 지원" },
+  { icon: BookOpenIcon,      category: "교육", title: "교육 혁신",   desc: "돌봄센터 5개소 신설, 방과후 프로그램 무상 확대" },
+  { icon: BriefcaseIcon,     category: "경제", title: "일자리 창출", desc: "청년 창업 센터 설립, 지역 기업 채용 인센티브" },
+  { icon: GlobeAmericasIcon, category: "환경", title: "환경 보호",   desc: "갯벌 생태 보전 특별구역, 도심 녹지 20% 확대" },
 ];
 
 const GALLERY_PREVIEW: { label: string; gradient: string; Icon: IconComponent }[] = [
@@ -57,15 +64,14 @@ export default function HomePage() {
           </div>
 
           <h1
-            className="text-5xl font-bold leading-tight md:text-7xl mb-6"
+            className="text-3xl sm:text-5xl font-bold leading-tight md:text-7xl mb-6"
             style={{ fontFamily: "Noto Serif KR, serif" }}
           >
             서산의 내일을<br />함께 만들겠습니다
           </h1>
 
-          <p className="text-xl leading-relaxed opacity-85 mb-10 max-w-xl mx-auto">
-            15년간 서산 시민과 함께한 홍길동이<br />
-            더 나은 서산을 위해 나섭니다.
+          <p className="text-base sm:text-xl leading-relaxed opacity-85 mb-10 max-w-xl mx-auto">
+            15년간 서산 시민과 함께한 홍길동이<br className="sm:hidden" /> 더 나은 서산을 위해 나섭니다.
           </p>
 
           <ScrollButton />
@@ -75,11 +81,11 @@ export default function HomePage() {
       {/* 통계 바 */}
       <section style={{ backgroundColor: "var(--color-primary)" }}>
         <div className="mx-auto max-w-4xl px-4 py-8">
-          <div className="grid grid-cols-3 gap-4 text-center text-white divide-x divide-white/20">
+          <div className="grid grid-cols-3 text-center text-white divide-x divide-white/20">
             {STATS.map((s) => (
-              <div key={s.label} className="py-2">
-                <p className="text-3xl font-bold md:text-4xl">{s.value}</p>
-                <p className="mt-1 text-xs opacity-70 md:text-sm">{s.label}</p>
+              <div key={s.label} className="py-2 px-2">
+                <p className="text-2xl font-bold sm:text-3xl md:text-4xl">{s.value}</p>
+                <p className="mt-1 text-[11px] leading-tight opacity-70 sm:text-xs md:text-sm">{s.label}</p>
               </div>
             ))}
           </div>
@@ -87,9 +93,9 @@ export default function HomePage() {
       </section>
 
       {/* 후보자 소개 */}
-      <section className="mx-auto max-w-6xl px-4 py-20">
-        <div className="flex flex-col items-center gap-12 md:flex-row">
-          <div className="flex-shrink-0 w-56 h-64 md:w-64 md:h-80 rounded-3xl overflow-hidden shadow-lg relative">
+      <section className="mx-auto max-w-2xl px-4 py-20 text-center">
+        <div className="flex flex-col items-center gap-8">
+          <div className="flex-shrink-0 w-56 h-64 rounded-3xl overflow-hidden shadow-lg relative">
             <Image
               src="/images/canditate2.jpg"
               alt="홍길동 후보자 사진"
@@ -98,17 +104,16 @@ export default function HomePage() {
               priority
             />
           </div>
-          <div className="flex-1">
+          <div>
             <p className="text-sm font-bold uppercase tracking-widest mb-2" style={{ color: "var(--color-cta)" }}>
               About Candidate
             </p>
             <h2 className="text-4xl font-bold mb-4" style={{ fontFamily: "Noto Serif KR, serif", color: "var(--color-primary)" }}>
               홍길동
             </h2>
-            <p className="text-lg leading-8 mb-6" style={{ color: "var(--color-text-muted)" }}>
-              서산에서 나고 자라며 15년간 지역 발전을 위해 헌신해온 홍길동입니다.
-              직접 겪어온 서산의 문제들을 누구보다 잘 알기에,
-              실현 가능한 해결책을 제시합니다.
+            <p className="text-base sm:text-lg leading-8 mb-6" style={{ color: "var(--color-text-muted)" }}>
+              서산에서 나고 자라며 15년간 지역 발전을 위해 헌신해온 홍길동입니다.<br />
+              직접 겪어온 서산의 문제들을 누구보다 잘 알기에,<br className="sm:hidden" /> 실현 가능한 해결책을 제시합니다.
             </p>
             <Link
               href="/about"
@@ -126,7 +131,7 @@ export default function HomePage() {
 
       {/* 핵심 공약 */}
       <section id="policy" style={{ backgroundColor: "var(--color-bg-subtle)" }} className="py-20">
-        <div className="mx-auto max-w-6xl px-4">
+        <div className="mx-auto max-w-3xl px-4">
           <div className="text-center mb-14">
             <p className="text-sm font-bold uppercase tracking-widest mb-2" style={{ color: "var(--color-cta)" }}>
               Key Policy
@@ -135,27 +140,37 @@ export default function HomePage() {
               서산을 바꿀 4가지 약속
             </h2>
           </div>
-          <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-4">
-            {POLICIES.map((p) => {
+          <div className="rounded-2xl overflow-hidden border" style={{ borderColor: "var(--color-border)" }}>
+            {POLICIES.map((p, index) => {
               const Icon = p.icon;
+              const color = POLICY_COLORS[p.category] ?? "var(--color-primary)";
               return (
                 <div
                   key={p.title}
-                  className="group rounded-2xl bg-white p-7 border transition-all duration-200 hover:shadow-xl hover:-translate-y-2 cursor-default"
+                  className={`flex items-center gap-4 px-6 py-5 bg-white ${index !== 0 ? "border-t" : ""}`}
                   style={{ borderColor: "var(--color-border)" }}
                 >
-                  <div
-                    className="w-14 h-14 rounded-2xl flex items-center justify-center mb-5 transition-transform duration-200 group-hover:scale-110"
-                    style={{ backgroundColor: "var(--color-bg-subtle)" }}
+                  <span
+                    className="hidden sm:flex flex-shrink-0 w-8 text-sm font-bold tabular-nums"
+                    style={{ color: `${color}80` }}
                   >
-                    <Icon className="w-7 h-7" style={{ color: "var(--color-primary)" }} />
+                    {String(index + 1).padStart(2, "0")}
+                  </span>
+                  <span
+                    className="flex-shrink-0 flex items-center gap-1.5 text-xs font-semibold px-2.5 py-1 rounded-full text-white"
+                    style={{ backgroundColor: color }}
+                  >
+                    <Icon className="w-3.5 h-3.5" />
+                    <span className="hidden sm:inline">{p.category}</span>
+                  </span>
+                  <div className="flex-1 min-w-0">
+                    <p className="text-sm sm:text-base font-semibold mb-0.5" style={{ color: "var(--color-text)" }}>
+                      {p.title}
+                    </p>
+                    <p className="text-xs sm:text-sm leading-5" style={{ color: "var(--color-text-muted)" }}>
+                      {p.desc}
+                    </p>
                   </div>
-                  <h3 className="text-lg font-bold mb-3" style={{ color: "var(--color-primary)" }}>
-                    {p.title}
-                  </h3>
-                  <p className="text-sm leading-7 whitespace-pre-line" style={{ color: "var(--color-text-muted)" }}>
-                    {p.desc}
-                  </p>
                 </div>
               );
             })}
@@ -181,7 +196,7 @@ export default function HomePage() {
         style={{ background: "linear-gradient(135deg, var(--color-primary) 0%, var(--color-primary-light) 100%)" }}
       >
         <div className="mx-auto max-w-2xl px-4">
-          <h2 className="text-3xl font-bold mb-4 md:text-4xl" style={{ fontFamily: "Noto Serif KR, serif" }}>
+          <h2 className="text-2xl sm:text-3xl font-bold mb-4 md:text-4xl" style={{ fontFamily: "Noto Serif KR, serif" }}>
             변화는 함께 만드는 것입니다
           </h2>
           <p className="text-lg mb-10 opacity-80">

@@ -23,11 +23,8 @@ export default function PolicyPage() {
         </p>
       </section>
 
-      <section className="mx-auto max-w-4xl px-4 py-16">
+      <section className="mx-auto max-w-3xl px-4 py-16">
         <PolicyTabs />
-        <p className="text-center mt-10 text-sm" style={{ color: "var(--color-text-muted)" }}>
-          * 상세 공약 자료는 선거사무소를 통해 확인하실 수 있습니다.
-        </p>
       </section>
     </>
   );

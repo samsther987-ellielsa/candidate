@@ -23,7 +23,7 @@ export default function VoterGuidePage() {
         <h1 className="text-4xl font-bold" style={{ fontFamily: "Noto Serif KR, serif" }}>
           유권자 안내
         </h1>
-        <p className="mt-3 text-lg opacity-85">소중한 한 표가 서산을 바꿉니다</p>
+        <p className="mt-3 text-lg opacity-85 max-w-xs mx-auto">소중한 한 표가 서산을 바꿉니다</p>
       </section>
 
       <section className="mx-auto max-w-4xl px-4 py-16 space-y-12">

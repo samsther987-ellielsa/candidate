@@ -38,7 +38,7 @@ export default function ParticipatePage() {
         <h1 className="text-4xl font-bold md:text-5xl" style={{ fontFamily: "Noto Serif KR, serif" }}>
           응원 한마디
         </h1>
-        <p className="mt-3 text-lg opacity-80">
+        <p className="mt-3 text-lg opacity-80 max-w-sm mx-auto">
           시민 여러분의 한 마디가 큰 힘이 됩니다
         </p>
       </section>

@@ -25,7 +25,7 @@ export default function ContactPage() {
         <h1 className="text-4xl font-bold" style={{ fontFamily: "Noto Serif KR, serif" }}>
           연락처
         </h1>
-        <p className="mt-3 text-lg opacity-85">궁금한 점이 있으시면 언제든 연락 주세요</p>
+        <p className="mt-3 text-lg opacity-85 max-w-xs mx-auto">궁금한 점이 있으시면 언제든 연락 주세요</p>
       </section>
 
       <section className="mx-auto max-w-5xl px-4 py-16">

@@ -9,6 +9,13 @@ import {
 } from "@heroicons/react/24/outline";
 import type { ComponentType, SVGProps } from "react";
 
+const CATEGORY_COLORS: Record<string, string> = {
+  주거: "#1e3a5f",
+  교육: "#0369a1",
+  경제: "#92400e",
+  환경: "#065f46",
+};
+
 export const metadata: Metadata = {
   title: "후보자 소개 | 홍길동",
   description: "홍길동 후보의 이력, 공약, 활동 갤러리를 확인하세요.",
@@ -24,11 +31,11 @@ const CAREER = [
 
 type IconComponent = ComponentType<SVGProps<SVGSVGElement>>;
 
-const KEY_POLICIES: { icon: IconComponent; title: string; desc: string }[] = [
-  { icon: HomeModernIcon,    title: "주거 안정", desc: "공공임대주택 500세대 공급, 청년 임대료 월 20만원 지원" },
-  { icon: BookOpenIcon,      title: "교육 혁신", desc: "공립 돌봄센터 5개소 신설, 방과후 프로그램 무상 확대" },
-  { icon: BriefcaseIcon,     title: "일자리 창출", desc: "청년 창업 센터 설립, 지역 기업 채용 인센티브 강화" },
-  { icon: GlobeAmericasIcon, title: "환경 보호", desc: "서산 갯벌 생태 보전 특별구역 지정, 녹지 20% 확대" },
+const KEY_POLICIES: { icon: IconComponent; category: string; title: string; desc: string }[] = [
+  { icon: HomeModernIcon,    category: "주거", title: "주거 안정", desc: "공공임대주택 500세대 공급, 청년 임대료 월 20만원 지원" },
+  { icon: BookOpenIcon,      category: "교육", title: "교육 혁신", desc: "공립 돌봄센터 5개소 신설, 방과후 프로그램 무상 확대" },
+  { icon: BriefcaseIcon,     category: "경제", title: "일자리 창출", desc: "청년 창업 센터 설립, 지역 기업 채용 인센티브 강화" },
+  { icon: GlobeAmericasIcon, category: "환경", title: "환경 보호", desc: "서산 갯벌 생태 보전 특별구역 지정, 녹지 20% 확대" },
 ];
 
 export default function AboutPage() {
@@ -154,38 +161,55 @@ export default function AboutPage() {
       </section>
 
       {/* 핵심 공약 */}
-      <section className="mx-auto max-w-6xl px-4 py-16">
+      <section className="mx-auto max-w-3xl px-4 py-16">
         <div className="text-center mb-12">
           <p className="text-sm font-semibold uppercase tracking-widest mb-2" style={{ color: "var(--color-cta)" }}>Policy</p>
           <h2 className="text-2xl font-bold md:text-3xl" style={{ fontFamily: "Noto Serif KR, serif", color: "var(--color-primary)" }}>
             핵심 공약
           </h2>
         </div>
-        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
-          {KEY_POLICIES.map((p) => {
+
+        <div className="rounded-2xl overflow-hidden border" style={{ borderColor: "var(--color-border)" }}>
+          {KEY_POLICIES.map((p, index) => {
             const Icon = p.icon;
+            const color = CATEGORY_COLORS[p.category] ?? "var(--color-primary)";
             return (
-            <div
-              key={p.title}
-              className="group rounded-2xl border bg-white p-6 transition-all duration-200 hover:shadow-lg hover:-translate-y-1"
-              style={{ borderColor: "var(--color-border)" }}
-            >
               <div
-                className="w-12 h-12 rounded-xl flex items-center justify-center mb-4"
-                style={{ backgroundColor: "var(--color-bg-subtle)" }}
+                key={p.title}
+                className={`flex items-center gap-4 px-6 py-5 bg-white ${index !== 0 ? "border-t" : ""}`}
+                style={{ borderColor: "var(--color-border)" }}
               >
-                <Icon className="w-6 h-6" style={{ color: "var(--color-primary)" }} />
+                {/* 번호 */}
+                <span
+                  className="hidden sm:flex flex-shrink-0 w-8 text-sm font-bold tabular-nums"
+                  style={{ color: `${color}80` }}
+                >
+                  {String(index + 1).padStart(2, "0")}
+                </span>
+
+                {/* 카테고리 뱃지 */}
+                <span
+                  className="flex-shrink-0 flex items-center gap-1.5 text-xs font-semibold px-2.5 py-1 rounded-full text-white"
+                  style={{ backgroundColor: color }}
+                >
+                  <Icon className="w-3.5 h-3.5" />
+                  <span className="hidden sm:inline">{p.category}</span>
+                </span>
+
+                {/* 내용 */}
+                <div className="flex-1 min-w-0">
+                  <p className="text-sm sm:text-base font-semibold mb-0.5" style={{ color: "var(--color-text)" }}>
+                    {p.title}
+                  </p>
+                  <p className="text-xs sm:text-sm leading-5" style={{ color: "var(--color-text-muted)" }}>
+                    {p.desc}
+                  </p>
+                </div>
               </div>
-              <h3 className="text-base font-bold mb-2" style={{ color: "var(--color-primary)" }}>
-                {p.title}
-              </h3>
-              <p className="text-sm leading-6" style={{ color: "var(--color-text-muted)" }}>
-                {p.desc}
-              </p>
-            </div>
             );
           })}
         </div>
+
         <div className="text-center mt-8">
           <Link
             href="/policy"

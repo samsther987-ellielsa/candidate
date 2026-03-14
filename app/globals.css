@@ -29,4 +29,14 @@ body {
   color: var(--color-text);
   font-family: "Noto Sans KR", sans-serif;
   -webkit-font-smoothing: antialiased;
+  word-break: keep-all;
+  overflow-wrap: break-word;
+}
+
+h1, h2, h3, h4 {
+  text-wrap: balance;
+}
+
+p {
+  text-wrap: pretty;
 }

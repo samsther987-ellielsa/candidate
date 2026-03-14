@@ -94,7 +94,6 @@ export default function Footer() {
                 { label: "후보자 소개", href: "/about" },
                 { label: "공약", href: "/policy" },
                 { label: "응원 한마디", href: "/participate" },
-                { label: "유권자 안내", href: "/voter-guide" },
                 { label: "연락처", href: "/contact" },
               ].map((item) => (
                 <li key={item.href}>
