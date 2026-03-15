@@ -97,7 +97,7 @@ export default function HomePage() {
         <div className="flex flex-col items-center gap-8">
           <div className="flex-shrink-0 w-56 h-64 rounded-3xl overflow-hidden shadow-lg relative">
             <Image
-              src="/images/canditate2.jpg"
+              src="/images/candidate2.jpg"
               alt="홍길동 후보자 사진"
               fill
               className="object-cover"

@@ -3,22 +3,34 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 
-// ⚠️ 프로토타입용 비밀번호 — 실제 배포 시 환경변수(.env)로 교체하세요
-const ADMIN_PASSWORD = "admin1234";
-
 export default function AdminLoginPage() {
   const router = useRouter();
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
 
-  const handleLogin = (e: React.FormEvent) => {
+  const handleLogin = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    if (password === ADMIN_PASSWORD) {
-      sessionStorage.setItem("isAdmin", "true");
-      router.push("/admin/gallery");
-    } else {
-      setError("비밀번호가 올바르지 않습니다.");
-      setPassword("");
+    setLoading(true);
+    setError("");
+    try {
+      const res = await fetch("/api/admin/auth", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ password }),
+      });
+      if (res.ok) {
+        sessionStorage.setItem("isAdmin", "true");
+        router.push("/admin/gallery");
+      } else {
+        const data = await res.json();
+        setError(data.error ?? "비밀번호가 올바르지 않습니다.");
+        setPassword("");
+      }
+    } catch {
+      setError("서버 연결에 실패했습니다.");
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -66,11 +78,11 @@ export default function AdminLoginPage() {
             </div>
             <button
               type="submit"
-              disabled={!password}
+              disabled={!password || loading}
               className="w-full rounded-xl py-3 text-base font-bold text-white min-h-[48px] transition-opacity disabled:opacity-40 hover:opacity-90"
               style={{ backgroundColor: "var(--color-primary)" }}
             >
-              로그인
+              {loading ? "확인 중..." : "로그인"}
             </button>
           </form>
         </div>

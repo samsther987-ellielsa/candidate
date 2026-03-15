@@ -109,7 +109,8 @@ export default function AdminGalleryPage() {
     }
   };
 
-  const handleLogout = () => {
+  const handleLogout = async () => {
+    await fetch("/api/admin/auth", { method: "DELETE" });
     sessionStorage.removeItem("isAdmin");
     router.replace("/admin");
   };

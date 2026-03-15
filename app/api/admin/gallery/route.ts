@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { readFile, writeFile, mkdir } from "fs/promises";
 import path from "path";
 import { DEFAULT_GALLERY_ITEMS, type GalleryItem } from "@/lib/gallery-data";
+import { isAdminAuthenticated, unauthorizedResponse } from "@/lib/admin-auth";
 
 const DATA_PATH = path.join(process.cwd(), "data", "gallery.json");
 
@@ -27,6 +28,7 @@ export async function GET() {
 
 // POST: 새 항목 추가
 export async function POST(request: NextRequest) {
+  if (!isAdminAuthenticated(request)) return unauthorizedResponse();
   try {
     const body = await request.json();
     const items = await readGallery();
@@ -50,6 +52,7 @@ export async function POST(request: NextRequest) {
 
 // DELETE: 항목 삭제
 export async function DELETE(request: NextRequest) {
+  if (!isAdminAuthenticated(request)) return unauthorizedResponse();
   try {
     const { id } = await request.json();
     const items = await readGallery();
@@ -63,6 +66,7 @@ export async function DELETE(request: NextRequest) {
 
 // PUT: 항목 수정
 export async function PUT(request: NextRequest) {
+  if (!isAdminAuthenticated(request)) return unauthorizedResponse();
   try {
     const body = await request.json();
     const items = await readGallery();

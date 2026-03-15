@@ -15,6 +15,15 @@ const SAMPLE_CHEERS = [
   { name: "농업인 박○○", message: "농촌 현장까지 직접 찾아와 주셔서 감사했습니다.", region: "서산시 해미면" },
 ];
 
+async function submitForm(payload: Record<string, unknown>) {
+  const res = await fetch("/api/submit", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(payload),
+  });
+  if (!res.ok) throw new Error("제출 실패");
+}
+
 export default function ParticipatePage() {
   const [cheerName, setCheerName] = useState("");
   const [cheerMessage, setCheerMessage] = useState("");
@@ -100,7 +109,13 @@ export default function ParticipatePage() {
               </div>
             ) : (
               <form
-                onSubmit={(e) => { e.preventDefault(); if (cheerConsent) setCheerSubmitted(true); }}
+                onSubmit={async (e) => {
+                  e.preventDefault();
+                  if (!cheerConsent) return;
+                  const fd = new FormData(e.currentTarget);
+                  await submitForm({ type: "cheer", name: cheerName, region: fd.get("region"), message: cheerMessage });
+                  setCheerSubmitted(true);
+                }}
                 className="space-y-5"
               >
                 <div className="grid grid-cols-1 gap-5 sm:grid-cols-2">
@@ -124,6 +139,7 @@ export default function ParticipatePage() {
                     </label>
                     <input
                       type="text"
+                      name="region"
                       placeholder="예: 서산시 동문동"
                       className="w-full rounded-xl border px-4 py-3 text-base outline-none transition-shadow focus:shadow-md min-h-[48px]"
                       style={{ borderColor: "var(--color-border)" }}
@@ -193,18 +209,24 @@ export default function ParticipatePage() {
                 <p className="font-semibold" style={{ color: "var(--color-primary)" }}>신청 완료! 곧 연락드리겠습니다.</p>
               </div>
             ) : (
-              <form onSubmit={(e) => { e.preventDefault(); if (volunteerConsent) setVolunteerSubmitted(true); }} className="space-y-4">
+              <form onSubmit={async (e) => {
+                e.preventDefault();
+                if (!volunteerConsent) return;
+                const fd = new FormData(e.currentTarget);
+                await submitForm({ type: "volunteer", name: fd.get("name"), phone: fd.get("phone"), activity: fd.get("activity") });
+                setVolunteerSubmitted(true);
+              }} className="space-y-4">
                 <div>
                   <label className="block text-sm font-semibold mb-1.5" style={{ color: "var(--color-text)" }}>이름 *</label>
-                  <input type="text" required placeholder="홍길동" className="w-full rounded-xl border px-4 py-3 text-base outline-none min-h-[48px]" style={{ borderColor: "var(--color-border)" }} />
+                  <input type="text" name="name" required placeholder="홍길동" className="w-full rounded-xl border px-4 py-3 text-base outline-none min-h-[48px]" style={{ borderColor: "var(--color-border)" }} />
                 </div>
                 <div>
                   <label className="block text-sm font-semibold mb-1.5" style={{ color: "var(--color-text)" }}>연락처 *</label>
-                  <input type="tel" required placeholder="010-0000-0000" className="w-full rounded-xl border px-4 py-3 text-base outline-none min-h-[48px]" style={{ borderColor: "var(--color-border)" }} />
+                  <input type="tel" name="phone" required placeholder="010-0000-0000" className="w-full rounded-xl border px-4 py-3 text-base outline-none min-h-[48px]" style={{ borderColor: "var(--color-border)" }} />
                 </div>
                 <div>
                   <label className="block text-sm font-semibold mb-1.5" style={{ color: "var(--color-text)" }}>희망 활동</label>
-                  <select className="w-full rounded-xl border px-4 py-3 text-base outline-none min-h-[48px]" style={{ borderColor: "var(--color-border)" }}>
+                  <select name="activity" className="w-full rounded-xl border px-4 py-3 text-base outline-none min-h-[48px]" style={{ borderColor: "var(--color-border)" }}>
                     <option>선택해 주세요</option>
                     <option>유세 지원</option>
                     <option>홍보물 배포</option>
@@ -243,14 +265,20 @@ export default function ParticipatePage() {
                 <p className="font-semibold" style={{ color: "var(--color-primary)" }}>구독 완료! 소식 보내드리겠습니다.</p>
               </div>
             ) : (
-              <form onSubmit={(e) => { e.preventDefault(); if (newsletterConsent) setNewsletterSubmitted(true); }} className="space-y-4">
+              <form onSubmit={async (e) => {
+                e.preventDefault();
+                if (!newsletterConsent) return;
+                const fd = new FormData(e.currentTarget);
+                await submitForm({ type: "newsletter", name: fd.get("name"), email: fd.get("email") });
+                setNewsletterSubmitted(true);
+              }} className="space-y-4">
                 <div>
                   <label className="block text-sm font-semibold mb-1.5" style={{ color: "var(--color-text)" }}>이름</label>
-                  <input type="text" placeholder="홍길동" className="w-full rounded-xl border px-4 py-3 text-base outline-none min-h-[48px]" style={{ borderColor: "var(--color-border)" }} />
+                  <input type="text" name="name" placeholder="홍길동" className="w-full rounded-xl border px-4 py-3 text-base outline-none min-h-[48px]" style={{ borderColor: "var(--color-border)" }} />
                 </div>
                 <div>
                   <label className="block text-sm font-semibold mb-1.5" style={{ color: "var(--color-text)" }}>이메일 *</label>
-                  <input type="email" required placeholder="example@email.com" className="w-full rounded-xl border px-4 py-3 text-base outline-none min-h-[48px]" style={{ borderColor: "var(--color-border)" }} />
+                  <input type="email" name="email" required placeholder="example@email.com" className="w-full rounded-xl border px-4 py-3 text-base outline-none min-h-[48px]" style={{ borderColor: "var(--color-border)" }} />
                 </div>
                 <div
                   className="rounded-2xl p-4"

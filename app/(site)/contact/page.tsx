@@ -1,6 +1,14 @@
 "use client";
 
 import { useState } from "react";
+
+async function submitContact(name: string, email: string, message: string) {
+  await fetch("/api/submit", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ type: "contact", name, email, message }),
+  });
+}
 import {
   MapPinIcon,
   PhoneIcon,
@@ -89,7 +97,13 @@ export default function ContactPage() {
                 </p>
               </div>
             ) : (
-              <form onSubmit={(e) => { e.preventDefault(); if (consent) setSubmitted(true); }} className="space-y-4">
+              <form onSubmit={async (e) => {
+                e.preventDefault();
+                if (!consent) return;
+                const fd = new FormData(e.currentTarget);
+                await submitContact(fd.get("name") as string, fd.get("email") as string, fd.get("message") as string);
+                setSubmitted(true);
+              }} className="space-y-4">
                 <div>
                   <label className="block text-sm font-medium mb-1" style={{ color: "var(--color-text)" }}>
                     이름 <span style={{ color: "var(--color-cta)" }}>*</span>
@@ -97,6 +111,7 @@ export default function ContactPage() {
                   <input
                     type="text"
                     required
+                    name="name"
                     placeholder="홍길동"
                     className="w-full rounded-lg border px-4 py-3 text-base outline-none min-h-[44px]"
                     style={{ borderColor: "var(--color-border)" }}
@@ -109,6 +124,7 @@ export default function ContactPage() {
                   <input
                     type="email"
                     required
+                    name="email"
                     placeholder="example@email.com"
                     className="w-full rounded-lg border px-4 py-3 text-base outline-none min-h-[44px]"
                     style={{ borderColor: "var(--color-border)" }}
@@ -121,6 +137,7 @@ export default function ContactPage() {
                   <textarea
                     required
                     rows={5}
+                    name="message"
                     placeholder="문의하실 내용을 입력해 주세요."
                     className="w-full rounded-lg border px-4 py-3 text-base outline-none resize-none"
                     style={{ borderColor: "var(--color-border)" }}

@@ -8,6 +8,8 @@ const NAV_ITEMS = [
   { label: "소개", href: "/about" },
   { label: "공약", href: "/policy" },
   { label: "갤러리", href: "/gallery" },
+  { label: "투표 안내", href: "/voter-guide" },
+  { label: "연락처", href: "/contact" },
 ];
 
 export default function Navigation() {
